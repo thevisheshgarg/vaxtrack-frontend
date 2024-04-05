@@ -18,19 +18,35 @@ import {
   Button,
   Select,
   MenuItem,
+  Snackbar,
 } from "@mui/material";
 
 const VaccineCentersDashboard = () => {
   const [searchId, setSearchId] = useState("");
   const [appointments, setAppointments] = useState([]);
-  const [totalVaccines, setTotalVaccines] = useState(0);
-  const [totalVaccinesToday, setTotalVaccinesToday] = useState(0);
+  const [updatedStatus, setUpdatedStatus] = useState("");
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [userCenter, setCenterData] = useState({});
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const storedCenter = sessionStorage.getItem("centerPhone");
+      if (storedCenter) {
+        const response = await axios.get(`http://localhost:8081/api/centers/phone/${JSON.parse(storedCenter).substring(3)}`);
+        setCenterData(response.data);
+        sessionStorage.setItem('centerData', JSON.stringify(response.data)); // Set userData to session storage
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/appointments/1"
+          `http://localhost:8081/api/appointments/${userCenter.centerId}`
         );
         setAppointments(response.data);
       } catch (error) {
@@ -39,23 +55,9 @@ const VaccineCentersDashboard = () => {
     };
 
     fetchAppointments();
-  }, []);
+  }, [userCenter]);
 
-  useEffect(() => {
-    // Calculate total vaccines in stock
-    const totalStock = appointments.reduce(
-      (total, appointment) => total + appointment.vaccineStock,
-      0
-    );
-    setTotalVaccines(totalStock);
 
-    // Calculate total vaccines given today
-    const today = new Date().toLocaleDateString();
-    const totalToday = appointments.filter(
-      (appointment) => new Date(appointment.appointmentDate).toLocaleDateString() === today
-    ).length;
-    setTotalVaccinesToday(totalToday);
-  }, [appointments]);
 
   const handleSearch = () => {
     // Filter appointments based on the entered ID
@@ -67,15 +69,21 @@ const VaccineCentersDashboard = () => {
 
   const handleStatusChange = (appointmentId, status) => {
     // Update status in the backend
-    axios.put(`http://localhost:8081/api/appointments/updateStatus/${appointmentId}`, { status })
+    axios.put(`http://localhost:8081/api/appointments/updateStatus/${appointmentId}?status=${status}`)
       .then(() => {
         // Update status in the frontend
         const updatedAppointments = appointments.map((appointment) =>
           appointment.appointmentId === appointmentId ? { ...appointment, status } : appointment
         );
         setAppointments(updatedAppointments);
+        setUpdatedStatus(status);
+        setConfirmationOpen(true);
       })
       .catch(error => console.error("Error updating appointment status:", error));
+  };
+
+  const handleConfirmationClose = () => {
+    setConfirmationOpen(false);
   };
 
   return (
@@ -86,38 +94,26 @@ const VaccineCentersDashboard = () => {
           <Typography variant="h6">Vaccine Center</Typography>
         </Toolbar>
       </AppBar>
-      <div className="flex flex-wrap justify-center">
-        <Card className="w-[45%] m-4">
-          <CardContent>
-            <Typography variant="h5">Total Vaccines in Stock</Typography>
-            <Typography variant="h4">{totalVaccines}</Typography>
-          </CardContent>
-        </Card>
-        <Card className="w-[45%] m-4">
-          <CardContent>
-            <Typography variant="h5">Total Vaccines Given Today</Typography>
-            <Typography variant="h4">{totalVaccinesToday}</Typography>
-          </CardContent>
-        </Card>
-      </div>
-      <Box className="text-center my-4">
+
+      <Box className="text-center my-4" style={{ display: 'flex', alignItems: 'center', maxWidth: '1200px', margin: '20px auto 0' }}>
         <TextField
           label="Search by Appointment ID"
           variant="outlined"
           size="small"
-          style={{ width: "calc(100% - 100px)", maxWidth: "1200px", marginRight: "16px" }}
+          style={{ flex: 1, marginRight: '16px' }}
           value={searchId}
           onChange={(e) => setSearchId(e.target.value)}
         />
         <Button
           variant="contained"
           color="primary"
-          style={{ backgroundColor: "#1976D2", color: "white" }}
+          style={{ backgroundColor: '#1976D2', color: 'white', minWidth: '100px' }}
           onClick={handleSearch}
         >
           Search
         </Button>
       </Box>
+
 
       <TableContainer>
         <Table>
@@ -150,6 +146,13 @@ const VaccineCentersDashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Snackbar
+        open={confirmationOpen}
+        autoHideDuration={6000}
+        onClose={handleConfirmationClose}
+        message={`Status updated to ${updatedStatus}`}
+      />
     </div>
   );
 };

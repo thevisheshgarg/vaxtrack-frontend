@@ -85,6 +85,7 @@ const OtpCenter = () => {
       .confirm(otp)
       .then(async (res) => {
         console.log(res);
+        sessionStorage.setItem('authenticated', 'true');
         sessionStorage.setItem('centerPhone', JSON.stringify(res.user.providerData[0].phoneNumber));
         setUser(res.user);
         setLoading(false);

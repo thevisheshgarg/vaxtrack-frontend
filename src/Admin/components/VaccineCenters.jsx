@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "@mui/material/Table";
@@ -44,8 +43,6 @@ const VaccineCenters = () => {
               <TableCell sx={{ color: 'white' }}>Pincode</TableCell>
               <TableCell sx={{ color: 'white' }}>State</TableCell>
               <TableCell sx={{ color: 'white' }}>District</TableCell>
-              <TableCell sx={{ color: 'white' }}>Username</TableCell>
-              <TableCell sx={{ color: 'white' }}>Password</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -61,8 +58,6 @@ const VaccineCenters = () => {
                 <TableCell>{center.pincode}</TableCell>
                 <TableCell>{center.state}</TableCell>
                 <TableCell>{center.district}</TableCell>
-                <TableCell>{center.username}</TableCell>
-                <TableCell>{center.password}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -73,4 +68,3 @@ const VaccineCenters = () => {
 };
 
 export default VaccineCenters;
-

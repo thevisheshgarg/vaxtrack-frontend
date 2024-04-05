@@ -11,8 +11,6 @@ const AddVaccinationCenter = () => {
     pincode: "",
     state: "",
     district: "",
-    username: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -39,8 +37,6 @@ const AddVaccinationCenter = () => {
         pincode: "",
         state: "",
         district: "",
-        username: "",
-        password: "",
       });
     } catch (error) {
       console.error("Error adding vaccination center:", error);
@@ -112,28 +108,6 @@ const AddVaccinationCenter = () => {
             variant="outlined"
             name="district"
             value={centerData.district}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <TextField
-            label="Username"
-            variant="outlined"
-            name="username"
-            value={centerData.username}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <TextField
-            label="Password"
-            variant="outlined"
-            name="password"
-            value={centerData.password}
             onChange={handleChange}
             fullWidth
             required

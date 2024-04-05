@@ -29,18 +29,16 @@ const Signin = () => {
     }
     
     // Check for specific username/password combinations
-    if ((username === "admin" && password === "admin123") || (username === "center13" && password === "center123")) {
+    if ((username === "admin" && password === "admin123")) {
+      // Set authentication cookie
+      Cookies.set("authenticated", "true",{expires:1});
+      
       // Redirect to appropriate page based on credentials
-      if (username === "admin") {
-        navigate("/admin");
-      } else if (username === "center13") {
-        navigate("/vaccinecenter");
-      }
+      navigate("/admin");
   
       // Set cookies if "Remember Me" is checked
       if (rememberMe) {
-        Cookies.set("username", username, { expires: 7 }); // Expires in 7 days
-        Cookies.set("password", password, { expires: 7 }); // Expires in 7 days
+        Cookies.set("authenticated", "true",{expires:7});
       }
     } else {
       // Display invalid credentials message

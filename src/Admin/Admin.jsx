@@ -24,6 +24,7 @@ import Appointments from "./components/Appointments";
 import VaccineCenters from "./components/VaccineCenters";
 import Patients from "./components/Patients";
 import AddVaccinationCenter from "./components/AddVaccinationCenter";
+import AddVaccine from "./components/AddVaccine";
 import Vaccines from "./components/Vaccines";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Notification from "./components/Notification";
@@ -31,6 +32,11 @@ import Notification from "./components/Notification";
 const menu = [
   { name: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
   { name: "Vaccines", path: "/admin/vaccines", icon: <InventoryIcon /> },
+  {
+    name: "AddVacine",
+    path: "/admin/vaccine/create",
+    icon: <AddShoppingCartIcon />,
+  },
   { name: "Patients", path: "/admin/patients", icon: <PersonIcon /> },
   {
     name: "Appointments",
@@ -114,6 +120,7 @@ const Admin = () => {
             element={<AddVaccinationCenter />}
           ></Route>
           <Route path="/appointments" element={<Appointments />}></Route>
+          <Route path="/vaccine/create" element={<AddVaccine />}></Route>
           <Route path="/vaccinecenter" element={<VaccineCenters />}></Route>
           <Route path="/patients" element={<Patients />}></Route>
           <Route path="/vaccines" element={<Vaccines />}></Route>

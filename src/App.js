@@ -5,6 +5,7 @@ import AdminRouter from "./Routers/AdminRouter";
 import { UserRouter } from "./Routers/UserRouter";
 import RegistrationForm from "./users/components/RegistrationForm";
 import VaccineCenterRouter from "./Routers/VaccineCenterRouter";
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
+  
 }
 
 export default App;
