@@ -27,12 +27,6 @@ const VaccineCentersDashboard = () => {
   const [updatedStatus, setUpdatedStatus] = useState("");
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [userCenter, setCenterData] = useState({});
-  const [record, setRecord] = useState({
-    patientId: "",
-    vaccineId: "",
-    vaccinationDate: "",
-    vaccinationCenterId: ""
-  })
 
 
   useEffect(() => {
@@ -81,9 +75,6 @@ const VaccineCentersDashboard = () => {
         const updatedAppointments = appointments.map((appointment) =>
           appointment.appointmentId === appointmentId ? { ...appointment, status } : appointment
         );
-        if(status="Completed"){
-          axios.post(``)
-        }
         setAppointments(updatedAppointments);
         setUpdatedStatus(status);
         setConfirmationOpen(true);
