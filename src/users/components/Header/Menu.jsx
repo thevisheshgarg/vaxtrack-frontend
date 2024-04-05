@@ -67,9 +67,9 @@ const Menu = ({ showMenu }) => {
       <div>
         {user ? (
           <>
-            <a href="/myprofile" className="text-white hover:text-gray-300 px-3 py-2 block md:inline">{userData.firstName}</a>
             <button onClick={handleDownloadCertificate} className="text-white hover:text-gray-300 px-3 py-2 block md:inline">Download Certificate</button>
-            <button onClick={handleLogout} className="text-white hover:text-red-500 hover:bg-red-100 px-3 py-2 block md:inline">Logout</button>
+            <a href="/myprofile" className="text-white font-bold hover:text-gray-300 px-3 py-2 block md:inline">{userData.firstName + " "+userData.lastName}</a>
+            <button onClick={handleLogout} className="text-red-500 bg-red-100 px-3 py-2 block md:inline rounded-sm">Logout</button>
           </>
         ) : (
           <a href="/login" className="bg-white px-4 py-3 rounded-sm text-blue-008DDA hover:text-white hover:bg-blue-700">Register/Login</a>

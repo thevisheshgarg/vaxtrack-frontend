@@ -52,7 +52,7 @@ const Login = () => {
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-4 text-center">
-            By registering, I agree to the <a href="#">terms and conditions</a>.
+            By registering, I agree to the <a href="/termsAndConditions" className='text-blue-600'>terms and conditions</a>.
           </p>
         </div>
       </div>

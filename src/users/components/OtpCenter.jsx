@@ -89,7 +89,7 @@ const OtpCenter = () => {
         sessionStorage.setItem('centerPhone', JSON.stringify(res.user.providerData[0].phoneNumber));
         setUser(res.user);
         setLoading(false);
-        navigate("/");
+        navigate("/vaccinecenter");
       })
       .catch((err) => {
         console.log(err);

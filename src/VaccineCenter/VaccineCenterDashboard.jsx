@@ -27,6 +27,12 @@ const VaccineCentersDashboard = () => {
   const [updatedStatus, setUpdatedStatus] = useState("");
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [userCenter, setCenterData] = useState({});
+  const [record, setRecord] = useState({
+    patientId: "",
+    vaccineId: "",
+    vaccinationDate: "",
+    vaccinationCenterId: ""
+  })
 
 
   useEffect(() => {
@@ -75,6 +81,9 @@ const VaccineCentersDashboard = () => {
         const updatedAppointments = appointments.map((appointment) =>
           appointment.appointmentId === appointmentId ? { ...appointment, status } : appointment
         );
+        if(status="Completed"){
+          axios.post(``)
+        }
         setAppointments(updatedAppointments);
         setUpdatedStatus(status);
         setConfirmationOpen(true);
@@ -95,58 +104,59 @@ const VaccineCentersDashboard = () => {
         </Toolbar>
       </AppBar>
 
-      <Box className="text-center my-4" style={{ display: 'flex', alignItems: 'center', maxWidth: '1200px', margin: '20px auto 0' }}>
-        <TextField
-          label="Search by Appointment ID"
-          variant="outlined"
-          size="small"
-          style={{ flex: 1, marginRight: '16px' }}
-          value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ backgroundColor: '#1976D2', color: 'white', minWidth: '100px' }}
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-      </Box>
+      <div className="px-10">
+        <Box className="text-center my-4" style={{ display: 'flex', alignItems: 'center', maxWidth: '1200px', margin: '20px auto 0' }}>
+          <TextField
+            label="Search by Appointment ID"
+            variant="outlined"
+            size="small"
+            style={{ flex: 1, marginRight: '16px' }}
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ backgroundColor: '#1976D2', color: 'white', minWidth: '100px' }}
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+        </Box>
 
 
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Patient ID</TableCell>
-              <TableCell>Vaccine ID</TableCell>
-              <TableCell>Appointment ID</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {appointments.map((appointment) => (
-              <TableRow key={appointment.appointmentId}>
-                <TableCell>{appointment.patientId}</TableCell>
-                <TableCell>{appointment.vaccineId}</TableCell>
-                <TableCell>{appointment.appointmentId}</TableCell>
-                <TableCell>
-                  <Select
-                    value={appointment.status}
-                    onChange={(e) => handleStatusChange(appointment.appointmentId, e.target.value)}
-                  >
-                    <MenuItem value="Scheduled">Scheduled</MenuItem>
-                    <MenuItem value="Completed">Completed</MenuItem>
-                    <MenuItem value="Canceled">Canceled</MenuItem>
-                  </Select>
-                </TableCell>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Patient ID</TableCell>
+                <TableCell>Vaccine ID</TableCell>
+                <TableCell>Appointment ID</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
+            </TableHead>
+            <TableBody>
+              {appointments.map((appointment) => (
+                <TableRow key={appointment.appointmentId}>
+                  <TableCell>{appointment.patientId}</TableCell>
+                  <TableCell>{appointment.vaccineId}</TableCell>
+                  <TableCell>{appointment.appointmentId}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={appointment.status}
+                      onChange={(e) => handleStatusChange(appointment.appointmentId, e.target.value)}
+                    >
+                      <MenuItem value="Scheduled">Scheduled</MenuItem>
+                      <MenuItem value="Completed">Completed</MenuItem>
+                      <MenuItem value="Canceled">Canceled</MenuItem>
+                    </Select>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
       <Snackbar
         open={confirmationOpen}
         autoHideDuration={6000}
